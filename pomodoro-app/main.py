@@ -11,7 +11,7 @@ SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
 
-# ---------------------------- TIMER RESET ------------------------------- # 
+# ---------------------------- TIMER RESET ------------------------------- #
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
@@ -38,7 +38,8 @@ def start_timer():
         title_label.config(text="Work", fg=GREEN)
 
 
-# ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
+
+# ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 
 
 def count_down(count):
@@ -53,6 +54,12 @@ def count_down(count):
     else:
         # count is 0
         start_timer()
+        marks = ""  # The string with checkmarks
+        work_sessions = math.floor(reps/2)  # reps/2 in the sense, for 4 sessions - 2 will be work and 2 will be breaks
+        for _ in range(work_sessions):
+            marks += "✅"
+        check_marks.config(text=marks)
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 
@@ -75,7 +82,7 @@ start_button.grid(column=0, row=2)
 reset_button = Button(text="Reset", highlightthickness=0)
 reset_button.grid(column=2, row=2)
 
-check_marks = Label(text="✅", fg=GREEN, bg=YELLOW)
+check_marks = Label(fg=GREEN, bg=YELLOW)
 check_marks.grid(column=1, row=3)
 
 
