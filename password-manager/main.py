@@ -1,6 +1,40 @@
 from tkinter import *
 from tkinter import messagebox
+import random
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+
+def generate_password():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    # for char in range(nr_letters):
+    #   password_list.append(random.choice(letters)) # OR the list comprehension below
+    password_letters = [random.choice(letters) for _ in range(nr_letters)]
+
+    # for char in range(nr_symbols):
+    #   password_list += random.choice(symbols) # OR the list comprehension below
+    password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+
+    # for char in range(nr_numbers):
+    #   password_list += random.choice(numbers) # OR the list comprehension below
+    password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+
+    password_list = password_letters + password_symbols + password_letters
+
+    random.shuffle(password_list)
+
+    # password = ""
+    # for char in password_list:
+    #     password += char # OR the code below to join the list elements
+    password = "".join(password_list)
+
+    password_entry.insert(0, password)  # writing it to the field
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
@@ -53,7 +87,7 @@ password_label.grid(column=0, row=3)
 password_entry = Entry(width=18)
 password_entry.grid(column=1, row=3)
 
-generate_password_button = Button(text="Generate Password")
+generate_password_button = Button(text="Generate Password", command=generate_password)
 generate_password_button.grid(column=2, row=3)
 
 add_button = Button(text="Add", width=36, command=save)
