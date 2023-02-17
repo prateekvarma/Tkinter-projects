@@ -74,6 +74,29 @@ def save():
             website_entry.delete(0, END)
             password_entry.delete(0, END)
     # if !is_ok then do nothing
+
+# ---- Search entry ----- #
+
+
+def find_password():
+    website = website_entry.get()  # website entered on the form
+
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        #  File not found
+        messagebox.showerror(title="Error", message="File not found!")
+    else:
+        #  file has been found
+        if website in data:
+            # website found in the file
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showerror(title="Error", message=f"No details for {website} exists!")
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 
@@ -93,8 +116,8 @@ website_entry = Entry(width=18)
 website_entry.grid(column=1, row=1)
 website_entry.focus()  # sets the cursor as initial position
 
-search_button = Button(text="Search", command=find_password)
-search_button.grid(column=2, row=1, columnspan=2)
+search_button = Button(text="Search", width=13, command=find_password)
+search_button.grid(column=2, row=1)
 
 email_label = Label(text="Email/Username")
 email_label.grid(column=0, row=2)
@@ -112,7 +135,7 @@ password_entry.grid(column=1, row=3)
 generate_password_button = Button(text="Generate Password", command=generate_password)
 generate_password_button.grid(column=2, row=3)
 
-add_button = Button(text="Add", width=36, command=save)
+add_button = Button(text="Add", width=32, command=save)
 add_button.grid(column=1, row=4, columnspan=2)
 
 window.mainloop()
