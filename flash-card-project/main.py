@@ -20,10 +20,16 @@ def next_card():
     canvas.itemconfig(card_background, image=card_front_img)
     flip_timer = window.after(3000, func=flip_card)  # re-starts a new timer
 
+
 def flip_card():
     canvas.itemconfig(card_title, text="English", fill="white")
     canvas.itemconfig(card_word, text=current_card["English"], fill="white")
     canvas.itemconfig(card_background, image=card_back_img)
+
+
+def is_known():
+    to_learn.remove(current_card)  # removes the current card from the to_learn list since this word is already used
+    next_card()
 
 
 window = Tk()
@@ -46,7 +52,8 @@ unknown_button = Button(image=cross_image, highlightthickness=0, command=next_ca
 unknown_button.grid(row=1, column=0)
 
 check_image = PhotoImage(file="images/right.png")
-known_button = Button(image=check_image, highlightthickness=0, command=next_card)
+# if user clicks check, remove the current card from the 'to_learn' list
+known_button = Button(image=check_image, highlightthickness=0, command=is_known)
 known_button.grid(row=1, column=1)
 
 next_card()  # calling the function here replaces the dummy text, and starts the next card
