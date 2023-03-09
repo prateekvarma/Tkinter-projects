@@ -35,7 +35,8 @@ def flip_card():
 def is_known():
     to_learn.remove(current_card)  # removes the current card from the to_learn list since this word is already used
     data_to_learn = pandas.DataFrame(to_learn)  # save the leftover words
-    data_to_learn.to_csv("data/words_to_learn.csv")  # saves the leftovers (yet to learn words) in a csv
+    data_to_learn.to_csv("data/words_to_learn.csv", index=False)  # saves the leftovers (yet to learn words) in a
+    # csv. The 'index' false tells pandas not to write the index column
     next_card()
 
 
