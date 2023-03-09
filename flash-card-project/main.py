@@ -3,11 +3,16 @@ import pandas
 import random
 
 BACKGROUND_COLOR = "#B1DDC6"
-
-data = pandas.read_csv("data/french_words.csv")
-to_learn = data.to_dict(orient="records")  # orient="records" structures the data differently
-
 current_card = {}
+to_learn = {}
+
+try:
+    data = pandas.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pandas.read_csv("data/french_words.csv")
+    to_learn = original_data.to_dict(orient="records")
+else:
+    to_learn = data.to_dict(orient="records")  # orient="records" structures the data differently
 
 
 def next_card():
@@ -29,6 +34,8 @@ def flip_card():
 
 def is_known():
     to_learn.remove(current_card)  # removes the current card from the to_learn list since this word is already used
+    data_to_learn = pandas.DataFrame(to_learn)  # save the leftover words
+    data_to_learn.to_csv("data/words_to_learn.csv")  # saves the leftovers (yet to learn words) in a csv
     next_card()
 
 
